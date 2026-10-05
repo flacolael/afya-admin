@@ -1,24 +1,43 @@
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider Theme="@_theme" @bind-IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
 
-    <MudAppBar Elevation="0" Color="Color.Dark">
+    <MudAppBar Elevation="0" Color="Color.Default">
 
         <MudIconButton Icon="@Icons.Material.Filled.Menu"
                        Color="Color.Inherit"
                        Edge="Edge.Start"
-                       OnClick="@(() => _drawerOpen = !_drawerOpen)" />
+                       OnClick="@ToggleDrawer" />
 
-        <MudText Typo="Typo.h6" Class="ml-3">
-            AFYA ADMIN
+        <MudText Typo="Typo.h6" Class="ml-2">
+            Afya Pedagógico
+        </MudText>
+
+        <MudText Typo="Typo.body2" Class="ml-4">
+            / Dashboard
         </MudText>
 
         <MudSpacer />
+
+        <MudTextField T="string"
+                      Placeholder="Buscar..."
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      Class="mr-3"
+                      Immediate="true" />
+
+        <MudIconButton Icon="@(_isDarkMode
+                                  ? Icons.Material.Filled.LightMode
+                                  : Icons.Material.Filled.DarkMode)"
+                       Color="Color.Inherit"
+                       OnClick="@ToggleDarkMode" />
 
         <MudIconButton Icon="@Icons.Material.Filled.Notifications"
                        Color="Color.Inherit" />
@@ -29,38 +48,77 @@
 
     </MudAppBar>
 
-
     <MudDrawer @bind-Open="_drawerOpen"
                Variant="DrawerVariant.Responsive"
-               Elevation="1"
-               Color="Color.Dark">
+               Elevation="1">
 
         <MudDrawerHeader>
-            <MudText Typo="Typo.h6" Class="pa-4">
-                Administração
-            </MudText>
+
+            <MudStack Row="true"
+                      AlignItems="AlignItems.Center"
+                      Spacing="2"
+                      Class="pa-4">
+
+                <MudAvatar Color="Color.Primary">
+                    A
+                </MudAvatar>
+
+                <MudStack Spacing="0">
+                    <MudText Typo="Typo.subtitle1">
+                        Afya
+                    </MudText>
+
+                    <MudText Typo="Typo.caption">
+                        Pedagógico
+                    </MudText>
+                </MudStack>
+
+            </MudStack>
+
         </MudDrawerHeader>
 
         <NavMenu />
 
     </MudDrawer>
 
-
     <MudMainContent>
 
-        <div class="pa-6">
-
+        <MudContainer MaxWidth="MaxWidth.False" Class="pa-4 pa-md-6">
             @Body
-
-        </div>
+        </MudContainer>
 
     </MudMainContent>
 
 </MudLayout>
 
-
 @code {
 
     private bool _drawerOpen = true;
 
+    private bool _isDarkMode;
+
+    private readonly MudTheme _theme = new()
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = "#594AE2",
+            Secondary = "#FF4081"
+        },
+
+        PaletteDark = new PaletteDark
+        {
+            Primary = "#7C6FF2",
+            Secondary = "#FF4081"
+        }
+    };
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private void ToggleDarkMode()
+    {
+        _isDarkMode = !_isDarkMode;
+    }
 }
