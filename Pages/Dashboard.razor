@@ -1,0 +1,219 @@
+@page "/"
+@using afya_admin.Components
+
+@using afya_admin.Data
+
+<MudStack Spacing="4">
+
+    <!-- Cabeçalho -->
+    <MudStack Row="true"
+              Justify="Justify.SpaceBetween"
+              AlignItems="AlignItems.Center"
+              Class="flex-wrap">
+
+        <MudStack Spacing="0">
+            <MudText Typo="Typo.h4">Dashboard</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Visão geral do Afya Pedagógico
+            </MudText>
+        </MudStack>
+
+        <SeletorPeriodo @bind-Periodo="_periodo" />
+
+    </MudStack>
+
+    <!-- KPIs -->
+    <MudGrid Spacing="3">
+        @foreach (var kpi in DashboardData.Kpis)
+        {
+            <MudItem xs="12" sm="6" lg="3">
+                <KpiCard Titulo="@kpi.Titulo"
+                         Valor="@kpi.Valor"
+                         Variacao="@kpi.Variacao"
+                         Tendencia="@kpi.Tendencia" />
+            </MudItem>
+        }
+    </MudGrid>
+
+    <!-- Gráficos -->
+    <MudGrid Spacing="3">
+
+        <MudItem xs="12" lg="8">
+            <DashboardCard Titulo="Receita x Meta" Acao="Detalhes">
+
+                <MudChart T="double" ChartType="ChartType.Line"
+                          ChartSeries="@ReceitaSeries"
+                          ChartLabels="@Meses"
+                          Width="100%"
+                          Height="300px"
+                           />
+
+            </DashboardCard>
+        </MudItem>
+
+        <MudItem xs="12" lg="4">
+            <DashboardCard Titulo="Distribuição de Clientes">
+
+                <MudChart T="double" ChartType="ChartType.Donut"
+                          ChartSeries="@ClientesSeries"
+                          ChartLabels="@ClientesLabels"
+                          Width="100%"
+                          Height="300px"
+                           />
+
+                <MudText Align="Align.Center"
+                         Typo="Typo.h5"
+                         Class="mt-n2">
+                    4.280
+                </MudText>
+
+                <MudText Align="Align.Center"
+                         Typo="Typo.caption"
+                         Color="Color.Secondary">
+                    Total de clientes
+                </MudText>
+
+            </DashboardCard>
+        </MudItem>
+
+    </MudGrid>
+
+    <!-- Projetos e atividades -->
+    <MudGrid Spacing="3">
+
+        <MudItem xs="12" lg="7">
+            <DashboardCard Titulo="Performance dos Projetos">
+
+                <MudTable Items="@DashboardData.Projetos"
+                          Hover="true"
+                          Dense="true"
+                          Striped="true">
+
+                    <HeaderContent>
+                        <MudTh>Projeto</MudTh>
+                        <MudTh>Responsável</MudTh>
+                        <MudTh>Progresso</MudTh>
+                        <MudTh>Status</MudTh>
+                    </HeaderContent>
+
+                    <RowTemplate>
+                        <MudTd DataLabel="Projeto">
+                            @context.Nome
+                        </MudTd>
+
+                        <MudTd DataLabel="Responsável">
+                            @context.Responsavel
+                        </MudTd>
+
+                        <MudTd DataLabel="Progresso">
+                            <MudStack Row="true"
+                                      AlignItems="AlignItems.Center"
+                                      Spacing="2">
+
+                                <MudProgressLinear Value="@context.Progresso"
+                                                   Rounded="true"
+                                                   Size="Size.Small"
+                                                   Class="flex-grow-1" />
+
+                                <MudText Typo="Typo.caption">
+                                    @context.Progresso%
+                                </MudText>
+
+                            </MudStack>
+                        </MudTd>
+
+                        <MudTd DataLabel="Status">
+                            <MudChip T="string"
+                                     Size="Size.Small"
+                                     Color="@(context.Status == "Concluído"
+                                         ? Color.Success
+                                         : Color.Warning)">
+                                @context.Status
+                            </MudChip>
+                        </MudTd>
+                    </RowTemplate>
+
+                </MudTable>
+
+            </DashboardCard>
+        </MudItem>
+
+        <MudItem xs="12" lg="5">
+            <DashboardCard Titulo="Atividades Recentes" Acao="Ver todas">
+
+                <MudList T="string" Dense="true">
+
+                    @foreach (var atividade in DashboardData.Atividades)
+                    {
+                        <MudListItem T="string" Icon="@GetIcon(atividade.Icone)">
+
+                            <MudStack Spacing="0">
+                                <MudText Typo="Typo.body2">
+                                    <b>@atividade.Usuario</b> @atividade.Acao
+                                </MudText>
+
+                                <MudText Typo="Typo.caption"
+                                         Color="Color.Secondary">
+                                    @atividade.Data
+                                </MudText>
+                            </MudStack>
+
+                        </MudListItem>
+                    }
+
+                </MudList>
+
+            </DashboardCard>
+        </MudItem>
+
+    </MudGrid>
+
+</MudStack>
+
+@code {
+
+    private string _periodo = "Últimos 30 dias";
+
+    private readonly string[] Meses =
+    [
+        "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+        "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+    ];
+
+    private readonly List<ChartSeries<double>> ReceitaSeries =
+    [
+        new()
+        {
+            Name = "Receita",
+            Data = new([72, 81, 78, 92, 88, 105, 112, 118, 121, 128, 134, 142])
+        },
+        new()
+        {
+            Name = "Meta",
+            Data = new([75, 78, 82, 85, 90, 95, 100, 105, 110, 115, 120, 125])
+        }
+    ];
+
+    private readonly string[] ClientesLabels = ["Alunos", "Professores", "Instituições", "Outros"];
+
+    private readonly List<ChartSeries<double>> ClientesSeries =
+    [
+        new()
+        {
+            Name = "Clientes",
+            Data = new([42, 28, 18, 12])
+        }
+    ];
+
+    private string GetIcon(string icon)
+    {
+        return icon switch
+        {
+            "CheckCircle" => Icons.Material.Filled.CheckCircle,
+            "Edit" => Icons.Material.Filled.Edit,
+            "AddTask" => Icons.Material.Filled.AddTask,
+            "Description" => Icons.Material.Filled.Description,
+            _ => Icons.Material.Filled.Info
+        };
+    }
+}
