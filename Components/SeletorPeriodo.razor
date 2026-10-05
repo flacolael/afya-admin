@@ -1,0 +1,38 @@
+<MudSelect T="string"
+           Value="@Periodo"
+           ValueChanged="@OnPeriodoChanged"
+           Variant="Variant.Outlined"
+           Margin="Margin.Dense"
+           Dense="true"
+           Label="Período"
+           Style="min-width: 150px;">
+
+    <MudSelectItem Value="@("Últimos 7 dias")">
+        Últimos 7 dias
+    </MudSelectItem>
+
+    <MudSelectItem Value="@("Últimos 30 dias")">
+        Últimos 30 dias
+    </MudSelectItem>
+
+    <MudSelectItem Value="@("Últimos 90 dias")">
+        Últimos 90 dias
+    </MudSelectItem>
+
+    <MudSelectItem Value="@("Este ano")">
+        Este ano
+    </MudSelectItem>
+
+</MudSelect>
+
+@code {
+    [Parameter] public string Periodo { get; set; } = "Últimos 30 dias";
+
+    [Parameter] public EventCallback<string> PeriodoChanged { get; set; }
+
+    private async Task OnPeriodoChanged(string valor)
+    {
+        Periodo = valor;
+        await PeriodoChanged.InvokeAsync(valor);
+    }
+}
