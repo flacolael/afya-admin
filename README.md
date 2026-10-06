@@ -1,83 +1,66 @@
-# Afya Pedagógico — Dashboard Administrativo
+# Afya Pedagógico — Sistema Acadêmico
 
 ## Identificação
+
 - **Aluno:** Lael Veiga
 - **Curso:** Bacharelado em Ciência da Computação
 - **Instituição:** São Lucas / Afya
-- **Matrícula:** PREENCHER
-- **Disciplina:** PREENCHER
-- **Professor(a):** PREENCHER
+- **Disciplina:** Desenvolvimento Web
+- **Projeto:** Afya Pedagógico
 
-## Objetivo
-Desenvolver um dashboard administrativo responsivo para visualizar indicadores acadêmicos, receita, distribuição de clientes, desempenho de projetos e atividades recentes.
+## Sobre o projeto
 
-## Tecnologias
+O **Afya Pedagógico** é uma aplicação web desenvolvida com Blazor WebAssembly e MudBlazor para simular um sistema administrativo acadêmico.
+
+A aplicação apresenta um dashboard com indicadores gerais e páginas destinadas ao gerenciamento e acompanhamento de informações acadêmicas, utilizando dados fictícios para demonstração.
+
+O projeto foi desenvolvido com foco em organização de componentes, reutilização de código, responsividade e utilização de uma interface baseada no Material Design.
+
+## Tecnologias utilizadas
+
 - C#
 - .NET 10
 - Blazor WebAssembly
 - MudBlazor
 - Razor
-- Git e GitHub
-
-## Como executar
-Requisitos: SDK .NET 10 instalado.
-
-\`\`\`bash
-git clone URL_DO_REPOSITORIO
-cd afya-admin
-dotnet restore
-dotnet watch
-\`\`\`
+- Git
+- GitHub
 
 ## Funcionalidades
-- Menu lateral e barra superior.
+
+### Dashboard
+
+- Indicadores acadêmicos em cards;
+- Gráficos e visualizações de dados;
+- Atividades recentes;
+- Informações resumidas do sistema;
+- Seletor de período;
 - Tema claro e escuro.
-- Cards de indicadores com tendências.
-- Gráficos de receita e distribuição de clientes.
-- Tabela de projetos com progresso e status.
-- Lista de atividades recentes.
-- Seletor de período.
-- Dados fictícios.
 
-## Estrutura
-- `Components/`: componentes reutilizáveis.
-- `Data/`: modelos e dados fictícios.
-- `Layout/`: layout e navegação.
-- `Pages/`: páginas da aplicação.
-- `wwwroot/`: arquivos estáticos.
+### Gestão acadêmica
 
-## Componentes
-| Componente | Responsabilidade |
-|---|---|
-| KpiCard | Exibir indicadores e tendências. |
-| DashboardCard | Padronizar cartões. |
-| SeletorPeriodo | Selecionar o período. |
-| MainLayout | Definir layout e tema. |
-| NavMenu | Exibir navegação. |
-| Dashboard | Organizar os elementos do painel. |
+- **Alunos:** visualização de alunos cadastrados, situação e curso;
+- **Professores:** informações do corpo docente;
+- **Cursos:** cursos disponíveis, modalidade, duração e quantidade de alunos;
+- **Notas:** acompanhamento do desempenho acadêmico;
+- **Relatórios:** indicadores e relatórios disponíveis;
+- **Configurações:** configurações gerais da aplicação.
 
-## Capturas de tela
-Adicionar capturas reais do tema claro, tema escuro, versão mobile e DevTools na pasta `docs/`.
+> Os dados utilizados na aplicação são fictícios e têm finalidade exclusivamente demonstrativa.
 
-## O que aprendi
-Responda às perguntas abaixo com suas próprias palavras.
+## Estrutura do projeto
 
-1. O que é Blazor WebAssembly? **PREENCHER**
-2. Qual é a função do MudBlazor? **PREENCHER**
-3. Por que dividir a interface em componentes? **PREENCHER**
-4. Para que servem os parâmetros de um componente? **PREENCHER**
-5. Como funciona a alternância entre tema claro e escuro? **PREENCHER**
-6. Como o layout se adapta a diferentes tamanhos de tela? **PREENCHER**
-7. Qual é a função dos modelos e dados fictícios? **PREENCHER**
-8. Como Git e commits ajudam no desenvolvimento? **PREENCHER**
-
-## Dificuldades e soluções
-- Compatibilidade com MudBlazor 9: ajustes nos parâmetros dos gráficos.
-- Organização da interface: separação de componentes, layout, páginas e dados.
-
-## Melhorias futuras
-- Integrar API e banco de dados.
-- Implementar autenticação e permissões.
-- Tornar a busca funcional.
-- Conectar o período selecionado aos gráficos.
-- Implementar as demais páginas do menu.
+```text
+afya-admin/
+├── Components/
+│   └── Componentes reutilizáveis
+├── Data/
+│   └── Dados e modelos utilizados pela aplicação
+├── Layout/
+│   └── Layout principal e navegação
+├── Pages/
+│   └── Páginas da aplicação
+├── wwwroot/
+│   └── Arquivos estáticos
+├── App.razor
+└── Program.cs
