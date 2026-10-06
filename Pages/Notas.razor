@@ -4,10 +4,65 @@
     <MudText Typo="Typo.h4">Notas</MudText>
     <MudText Color="Color.Secondary">Acompanhamento do desempenho acadêmico.</MudText>
 
-    <MudPaper Class="pa-6">
-        <MudText Typo="Typo.h6">Área de Notas</MudText>
-        <MudText Typo="Typo.body2" Color="Color.Secondary">
-            Esta seção está disponível para acompanhamento acadêmico.
-        </MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Média geral</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Primary">8,2</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Aprovados</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Success">91%</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Em recuperação</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Warning">9%</MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6" Class="mb-3">Desempenho dos alunos</MudText>
+
+        <MudTable Items="@notas" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Aluno</MudTh>
+                <MudTh>Disciplina</MudTh>
+                <MudTh>Nota</MudTh>
+                <MudTh>Situação</MudTh>
+            </HeaderContent>
+
+            <RowTemplate>
+                <MudTd>@context.Aluno</MudTd>
+                <MudTd>@context.Disciplina</MudTd>
+                <MudTd>@context.Valor.ToString("0.0")</MudTd>
+                <MudTd>
+                    <MudChip T="string"
+                             Color="@(context.Valor >= 7 ? Color.Success : Color.Warning)"
+                             Size="Size.Small">
+                        @(context.Valor >= 7 ? "Aprovado" : "Recuperação")
+                    </MudChip>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
     </MudPaper>
 </MudStack>
+
+@code {
+    private readonly List<Nota> notas =
+    [
+        new("Ana Carolina", "Banco de Dados", 9.2),
+        new("Bruno Henrique", "Engenharia de Software", 8.5),
+        new("Carlos Eduardo", "Redes de Computadores", 7.8),
+        new("Mariana Silva", "Programação", 6.4),
+        new("João Pedro", "Sistemas Operacionais", 8.9)
+    ];
+
+    private record Nota(string Aluno, string Disciplina, double Valor);
+}

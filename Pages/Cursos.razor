@@ -4,10 +4,57 @@
     <MudText Typo="Typo.h4">Cursos</MudText>
     <MudText Color="Color.Secondary">Gerenciamento dos cursos oferecidos.</MudText>
 
-    <MudPaper Class="pa-6">
-        <MudText Typo="Typo.h6">Área de Cursos</MudText>
-        <MudText Typo="Typo.body2" Color="Color.Secondary">
-            Esta seção está disponível para gerenciamento acadêmico.
-        </MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Cursos ativos</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Primary">24</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Alunos matriculados</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Success">1.248</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Cursos disponíveis</MudText>
+                <MudText Typo="Typo.h4">8</MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6" Class="mb-3">Cursos cadastrados</MudText>
+
+        <MudTable Items="@cursos" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Curso</MudTh>
+                <MudTh>Modalidade</MudTh>
+                <MudTh>Duração</MudTh>
+                <MudTh>Alunos</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Nome</MudTd>
+                <MudTd>@context.Modalidade</MudTd>
+                <MudTd>@context.Duracao</MudTd>
+                <MudTd>@context.Alunos</MudTd>
+            </RowTemplate>
+        </MudTable>
     </MudPaper>
 </MudStack>
+
+@code {
+    private readonly List<Curso> cursos =
+    [
+        new("Ciência da Computação", "Presencial", "8 semestres", 342),
+        new("Engenharia de Software", "Presencial", "8 semestres", 286),
+        new("Sistemas de Informação", "Híbrido", "8 semestres", 251),
+        new("Administração", "Presencial", "8 semestres", 369)
+    ];
+
+    private record Curso(string Nome, string Modalidade, string Duracao, int Alunos);
+}

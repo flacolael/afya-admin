@@ -4,10 +4,62 @@
     <MudText Typo="Typo.h4">Alunos</MudText>
     <MudText Color="Color.Secondary">Gerenciamento de alunos cadastrados.</MudText>
 
-    <MudPaper Class="pa-6">
-        <MudText Typo="Typo.h6">Área de Alunos</MudText>
-        <MudText Typo="Typo.body2" Color="Color.Secondary">
-            Esta seção está disponível para gerenciamento acadêmico.
-        </MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Total de alunos</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Primary">1.248</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Ativos</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Success">1.186</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Inativos</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Warning">62</MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6" Class="mb-3">Alunos cadastrados</MudText>
+
+        <MudTable Items="@alunos" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Curso</MudTh>
+                <MudTh>Período</MudTh>
+                <MudTh>Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Nome</MudTd>
+                <MudTd>@context.Curso</MudTd>
+                <MudTd>@context.Periodo</MudTd>
+                <MudTd>
+                    <MudChip T="string" Color="@(context.Ativo ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(context.Ativo ? "Ativo" : "Inativo")
+                    </MudChip>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
     </MudPaper>
 </MudStack>
+
+@code {
+    private readonly List<Aluno> alunos =
+    [
+        new("Ana Carolina", "Ciência da Computação", "4º", true),
+        new("Bruno Henrique", "Engenharia de Software", "6º", true),
+        new("Carlos Eduardo", "Sistemas de Informação", "3º", true),
+        new("Mariana Silva", "Ciência da Computação", "2º", false),
+        new("João Pedro", "Análise e Desenvolvimento", "5º", true)
+    ];
+
+    private record Aluno(string Nome, string Curso, string Periodo, bool Ativo);
+}

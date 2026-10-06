@@ -4,10 +4,60 @@
     <MudText Typo="Typo.h4">Professores</MudText>
     <MudText Color="Color.Secondary">Gerenciamento do corpo docente.</MudText>
 
-    <MudPaper Class="pa-6">
-        <MudText Typo="Typo.h6">Área de Professores</MudText>
-        <MudText Typo="Typo.body2" Color="Color.Secondary">
-            Esta seção está disponível para gerenciamento acadêmico.
-        </MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Total de professores</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Primary">86</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Ativos</MudText>
+                <MudText Typo="Typo.h4" Color="Color.Success">81</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">Departamentos</MudText>
+                <MudText Typo="Typo.h4">12</MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6" Class="mb-3">Corpo docente</MudText>
+
+        <MudTable Items="@professores" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Professor</MudTh>
+                <MudTh>Área</MudTh>
+                <MudTh>Titulação</MudTh>
+                <MudTh>Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Nome</MudTd>
+                <MudTd>@context.Area</MudTd>
+                <MudTd>@context.Titulacao</MudTd>
+                <MudTd>
+                    <MudChip T="string" Color="Color.Success" Size="Size.Small">Ativo</MudChip>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
     </MudPaper>
 </MudStack>
+
+@code {
+    private readonly List<Professor> professores =
+    [
+        new("Ricardo Almeida", "Tecnologia", "Mestre"),
+        new("Juliana Costa", "Computação", "Doutora"),
+        new("Marcelo Santos", "Engenharia", "Mestre"),
+        new("Fernanda Lima", "Banco de Dados", "Doutora"),
+        new("Paulo Mendes", "Redes", "Especialista")
+    ];
+
+    private record Professor(string Nome, string Area, string Titulacao);
+}

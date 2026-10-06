@@ -1,13 +1,93 @@
 @page "/configuracoes"
 
 <MudStack Spacing="3">
-    <MudText Typo="Typo.h4">Configurações</MudText>
-    <MudText Color="Color.Secondary">Preferências e configurações do sistema.</MudText>
 
-    <MudPaper Class="pa-6">
-        <MudText Typo="Typo.h6">Configurações do Sistema</MudText>
-        <MudText Typo="Typo.body2" Color="Color.Secondary">
-            Esta seção está disponível para configuração da aplicação.
+    <MudText Typo="Typo.h4">Configurações</MudText>
+
+    <MudText Color="Color.Secondary">
+        Preferências e configurações do sistema.
+    </MudText>
+
+    <MudPaper Class="pa-5">
+
+        <MudText Typo="Typo.h6" Class="mb-4">
+            Configurações gerais
         </MudText>
+
+        <MudStack Spacing="3">
+
+            <MudTextField T="string"
+                          Label="Nome da instituição"
+                          Variant="Variant.Outlined"
+                          @bind-Value="nomeInstituicao" />
+
+            <MudTextField T="string"
+                          Label="E-mail administrativo"
+                          Variant="Variant.Outlined"
+                          @bind-Value="emailAdministrativo" />
+
+            <MudSelect T="string"
+                       Label="Idioma"
+                       Variant="Variant.Outlined"
+                       @bind-Value="idioma">
+
+                <MudSelectItem T="string" Value="@("Português")">
+                    Português
+                </MudSelectItem>
+
+                <MudSelectItem T="string" Value="@("English")">
+                    English
+                </MudSelectItem>
+
+            </MudSelect>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="Salvar">
+                Salvar configurações
+            </MudButton>
+
+            @if (salvo)
+            {
+                <MudAlert Severity="Severity.Success">
+                    Configurações salvas com sucesso.
+                </MudAlert>
+            }
+
+        </MudStack>
+
     </MudPaper>
+
+    <MudPaper Class="pa-5">
+
+        <MudText Typo="Typo.h6">
+            Informações do sistema
+        </MudText>
+
+        <MudText Color="Color.Secondary">
+            AFYA - Sistema Acadêmico
+        </MudText>
+
+        <MudText Color="Color.Secondary">
+            Versão 1.0.0
+        </MudText>
+
+    </MudPaper>
+
 </MudStack>
+
+@code {
+
+    private string nomeInstituicao = "AFYA - Sistema Acadêmico";
+
+    private string emailAdministrativo = "admin@afya.edu.br";
+
+    private string idioma = "Português";
+
+    private bool salvo = false;
+
+    private void Salvar()
+    {
+        salvo = true;
+    }
+}
